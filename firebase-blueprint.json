@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Restaurant": {
+      "title": "Restaurant",
+      "description": "A restaurant entity in the multi-tenant system.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the restaurant" },
+        "slug": { "type": "string", "description": "URL slug for the restaurant" },
+        "ownerUid": { "type": "string", "description": "UID of the restaurant admin" },
+        "defaultLanguage": { "type": "string", "description": "Default language (en/fa)", "enum": ["en", "fa"] },
+        "isEnabled": { "type": "boolean", "description": "Whether the restaurant is active" }
+      },
+      "required": ["name", "slug", "ownerUid", "defaultLanguage", "isEnabled"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "A food category (e.g., Breakfast, Drinks).",
+      "type": "object",
+      "properties": {
+        "restaurantId": { "type": "string", "description": "ID of the parent restaurant" },
+        "name": { "type": "object", "description": "Multi-language name" },
+        "description": { "type": "object", "description": "Multi-language description" },
+        "image": { "type": "string", "description": "URL of the category image" },
+        "order": { "type": "integer", "description": "Display order" }
+      },
+      "required": ["restaurantId", "name", "order"]
+    },
+    "Food": {
+      "title": "Food",
+      "description": "A menu item.",
+      "type": "object",
+      "properties": {
+        "restaurantId": { "type": "string", "description": "ID of the parent restaurant" },
+        "categoryId": { "type": "string", "description": "ID of the parent category" },
+        "name": { "type": "object", "description": "Multi-language name" },
+        "description": { "type": "object", "description": "Multi-language description" },
+        "price": { "type": "number", "description": "Price of the item" },
+        "photo": { "type": "string", "description": "URL of the food photo" },
+        "order": { "type": "integer", "description": "Display order" }
+      },
+      "required": ["restaurantId", "categoryId", "name", "price", "order"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A user record with roles.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "User email" },
+        "role": { "type": "string", "description": "User role", "enum": ["system_admin", "restaurant_admin"] },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User metadata and roles"
+    },
+    "/restaurants/{restaurantId}": {
+      "schema": "Restaurant",
+      "description": "Top-level restaurant documents"
+    },
+    "/restaurants/{restaurantId}/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Categories within a restaurant"
+    },
+    "/restaurants/{restaurantId}/foods/{foodId}": {
+      "schema": "Food",
+      "description": "Food items within a restaurant"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "DineMenu Multi-Tenant",
+  "description": "A multi-language, multi-tenant restaurant menu platform with QR code generation and image management.",
+  "requestFramePermissions": []
+}

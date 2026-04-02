@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "uid": "admin-uid",
+      "email": "admin@dinemenu.com",
+      "role": "system_admin"
+    }
+  ],
+  "restaurants": [],
+  "categories": [],
+  "foods": []
+}
